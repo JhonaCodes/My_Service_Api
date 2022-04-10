@@ -35,6 +35,10 @@ public class UserService {
     }
 
 
+    public String isValidUser(String mail, String password){
+        return userDomainRepository.isValidLogin(mail, password);
+    }
+
     public Integer getTotalUsers(){
         return userDomainRepository.getTotalUser();
     }

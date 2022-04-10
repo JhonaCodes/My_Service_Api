@@ -12,6 +12,7 @@ public interface UserDomainRepository {
     Integer getTotalUser();
     UserDomain getUserById(Integer userId);
 
+    String isValidLogin(String email, String password);
 
 
 }

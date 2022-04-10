@@ -24,6 +24,11 @@ public class UserController {
     }
 
 
+    @GetMapping("/login/{mail}/{password}")
+    String isValidUser(@PathVariable("mail") String mail, @PathVariable("password") String password ){
+        return userService.isValidUser(mail,password);
+    }
+
 
     @GetMapping("/{id}")
     Optional<UserDomain> findUserById(@PathVariable("id") Integer id){

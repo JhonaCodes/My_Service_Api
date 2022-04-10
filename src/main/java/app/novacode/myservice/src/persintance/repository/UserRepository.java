@@ -51,7 +51,29 @@ public class UserRepository implements UserDomainRepository {
         return userMapper.toUserDomain(user);
     }
 
+    @Override
+    public String isValidLogin(String email, String password) {
 
+        Optional<UserDomain> userDomain = findByEmail(email);
+
+        String emailDataBase = userDomain.get().getUserMail();
+        String passwordDatabase = userDomain.get().getUserPassword();
+
+        if(userDomain.isPresent())
+
+           if(emailDataBase.equals(email) && passwordDatabase.equals(password))
+
+               return "Valid";
+
+           else
+
+               return "Wrong Email or Password";
+
+        else
+            return "Non-Registered User";
+
+
+    }
 
 
 }
