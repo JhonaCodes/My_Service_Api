@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -39,41 +41,67 @@ public class ResetPasswordController {
 
     @GetMapping("/info_code/{reset_code}")
     public Optional<ResetPasswordDomain> getCodeInfo(@PathVariable("reset_code") String code){
+
         return resetPasswordService.getResetCode(code);
+
+
     }
 
 
 
     @PostMapping
-    public String resetPasswordDomain(@RequestBody ResetPasswordDomain resetPasswordDomain) throws NoSuchAlgorithmException {
+    public Map<String, Object> resetPasswordDomain(@RequestBody ResetPasswordDomain resetPasswordDomain) throws NoSuchAlgorithmException {
         long actualTime = System.nanoTime();
 
         resetPasswordDomain.setCodeReset(MD5Generator.recoveryCode(actualTime));
         resetPasswordDomain.setCodeStatus("Active");
 
-        ResponseEntity<ResetPasswordDomain> isCreated = new ResponseEntity<ResetPasswordDomain>(resetPasswordService.saveResetPassword(resetPasswordDomain), HttpStatus.CREATED);
+        ResponseEntity<ResetPasswordDomain> isCreated =
+                new ResponseEntity<ResetPasswordDomain>(resetPasswordService.saveResetPassword(resetPasswordDomain), HttpStatus.CREATED);
+
+
+        Map<String, Object> sussesCode = new HashMap<>();
+        sussesCode.put("susses", "Recovery Code Sended Suscefull to: "
+                + resetPasswordDomain.getEmailReset()
+                + " Please open your email");
+
+
+        Map<String, Object> unSussesCode = new HashMap<>();
+        unSussesCode.put("unSusses", "Can't Send Recovery Code to: " + resetPasswordDomain.getEmailReset());
+
+
+        Map<String, Object> userNoExist = new HashMap<>();
+        userNoExist.put("noExist", "The mail: "
+                + resetPasswordDomain.getEmailReset()
+                + " No exist\n Create a new account" );
+
 
         if(userService.getUserByEmail(resetPasswordDomain.getEmailReset()).isPresent()) {
 
             if (isCreated.getStatusCode() == (HttpStatus.CREATED)) {
 
+
                 emailSenderService.sendSimpleEmail(
                         resetPasswordDomain.getEmailReset(),
-                        "This Is Your Code: \n\n" + resetPasswordDomain.getCodeReset() + "\n\nNova Code Service\nPlease no replay to this email thanks ",
-                        "Your Code is " + resetPasswordDomain.getCodeStatus() + " for reset your password");
-                return "Recovery Code Sended Suscefull to: " + resetPasswordDomain.getEmailReset() + " Please open your email";
+                        "This Is Your Code: \n\n" + resetPasswordDomain.getCodeReset()
+                                + "\n\nNova Code Service\nPlease no replay to this email thanks ", "Your Code is "
+                                + resetPasswordDomain.getCodeStatus()
+                                + " for reset your password");
+
+
+                return sussesCode;
 
             } else {
 
                 // No se pudo crear
-                return "Can't Send Recovery Code to: " + resetPasswordDomain.getEmailReset() ;
+                return unSussesCode ;
 
             }
 
         }else{
 
-            // User no existe
-            return "The mail: " + resetPasswordDomain.getEmailReset() + " No exist\n Create a new account";
+            // User no exist
+            return userNoExist;
 
         }
 
@@ -81,14 +109,8 @@ public class ResetPasswordController {
     }
 
 
-
-//    @PostMapping("/new")
-//    public ResetPasswordDomain create(@RequestBody ResetPasswordDomain resetPasswordDomain){
-//        return resetPasswordService.updateResetPassword(resetPasswordDomain);
-//    }
-
     @PutMapping
-    public ResetPasswordDomain updateStatusCode(@ModelAttribute ResetPasswordDomain resetPasswordDomain){
+    public ResetPasswordDomain updateStatusCode(@RequestBody ResetPasswordDomain resetPasswordDomain){
         return resetPasswordService.updateResetPassword(resetPasswordDomain);
     }
 

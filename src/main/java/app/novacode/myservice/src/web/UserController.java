@@ -6,6 +6,8 @@ import app.novacode.myservice.src.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -25,7 +27,7 @@ public class UserController {
 
 
     @GetMapping("/login/{mail}/{password}")
-    String isValidUser(@PathVariable("mail") String mail, @PathVariable("password") String password ){
+    Map<String, Object> isValidUser(@PathVariable("mail") String mail, @PathVariable("password") String password ){
         return userService.isValidUser(mail,password);
     }
 
@@ -35,18 +37,42 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/validate/{mail}")
+    Map<String, Object> existEMail(@PathVariable("mail") String mail){
+        Map<String, Object> validation = new HashMap<String, Object>();
+
+        validation.put("existMail", userService.getUserByEmail(mail).isPresent());
 
 
+        return validation;
+
+    }
 
 
-    @PostMapping
+    @PostMapping("/body")
     public UserDomain saveUser(@RequestBody UserDomain userDomain){
 
         return userService.saveUser(userDomain);
         //@ModelAttribute
-
-
     }
+
+    @PutMapping
+    public Map<String, String> updatePasswordUser(@RequestBody UserDomain userDomain){
+
+        Map<String, String> susses = new HashMap<>();
+        UserDomain newUser = findUserByEmail(userDomain.getUserMail()).get();
+
+        newUser.setUserPassword(userDomain.getUserPassword());
+
+        userDomain = newUser;
+        userService.saveUser(userDomain);
+
+
+        susses.put("statusPassword", "Password Changed Successful :)");
+
+      return susses;
+    }
+
 
 
 

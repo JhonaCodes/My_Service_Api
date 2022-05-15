@@ -2,6 +2,7 @@ package app.novacode.myservice.src.domain.repository;
 
 import app.novacode.myservice.src.domain.entity.UserDomain;
 
+import java.util.Map;
 import java.util.Optional;
 
 public interface UserDomainRepository {
@@ -12,7 +13,7 @@ public interface UserDomainRepository {
     Integer getTotalUser();
     UserDomain getUserById(Integer userId);
 
-    String isValidLogin(String email, String password);
+    Map<String, Object> isValidLogin(String email, String password);
 
 
 }

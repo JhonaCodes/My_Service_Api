@@ -8,6 +8,8 @@ import app.novacode.myservice.src.persintance.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -52,26 +54,50 @@ public class UserRepository implements UserDomainRepository {
     }
 
     @Override
-    public String isValidLogin(String email, String password) {
+    public Map<String, Object> isValidLogin(String email, String password) {
 
         Optional<UserDomain> userDomain = findByEmail(email);
 
         String emailDataBase = userDomain.get().getUserMail();
         String passwordDatabase = userDomain.get().getUserPassword();
 
-        if(userDomain.isPresent())
+        Map<String, Object> responseLogin = new HashMap<String, Object>();
+        responseLogin.put("response", "SearchingData");
 
-           if(emailDataBase.equals(email) && passwordDatabase.equals(password))
+        if(userDomain.isPresent()) {
 
-               return "Valid";
+            if ( emailDataBase.equals(email) && passwordDatabase.equals(password) ) {
 
-           else
+                var user  = findByEmail(email);
 
-               return "Wrong Email or Password";
+                responseLogin.clear();
 
-        else
-            return "Non-Registered User";
+                responseLogin.put("userId",        user.get().getUserId());
+                responseLogin.put("userFirstName", user.get().getUserFirstName());
+                responseLogin.put("userRol",       user.get().getUserRol());
+                responseLogin.put("response", "Valid");
 
+
+                return responseLogin;
+
+
+
+            } else {
+
+                responseLogin.clear();
+
+                responseLogin.put("response", "Password Or Email Wrong");
+
+                return responseLogin;
+
+            }
+        }else {
+
+            responseLogin.clear();
+            responseLogin.put("response", "Non-Registered User");
+
+            return responseLogin;
+        }
 
     }
 

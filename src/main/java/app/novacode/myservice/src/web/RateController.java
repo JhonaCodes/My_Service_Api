@@ -42,12 +42,12 @@ public class RateController {
 
 
     @PostMapping()
-    public RateDomain saveRate(@ModelAttribute RateDomain rateDomain){
+    public RateDomain saveRate(@RequestBody RateDomain rateDomain){
         return rateService.saveRate(rateDomain);
     }
 
     @PutMapping
-    public RateDomain updateRate(@ModelAttribute RateDomain rateDomain){
+    public RateDomain updateRate(@RequestBody RateDomain rateDomain){
         return rateService.updateRate(rateDomain);
     }
 

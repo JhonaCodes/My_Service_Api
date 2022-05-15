@@ -6,6 +6,7 @@ import app.novacode.myservice.src.domain.repository.UserDomainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -35,7 +36,7 @@ public class UserService {
     }
 
 
-    public String isValidUser(String mail, String password){
+    public Map<String, Object> isValidUser(String mail, String password){
         return userDomainRepository.isValidLogin(mail, password);
     }
 
