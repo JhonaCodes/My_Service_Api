@@ -3,6 +3,9 @@ package app.novacode.myservice.src.domain.entity;
 
 import app.novacode.myservice.src.persintance.entity.User;
 
+import java.sql.Blob;
+
+
 public class BusinessDomain {
 
     private String sellerId;
@@ -11,8 +14,9 @@ public class BusinessDomain {
     private String businessName;
     private String businessWebsite;
     private String businessAbout;
-    private String imageUrl;
-    private User sellerData;
+    private byte[] imageUrl;
+
+    private UserDomain sellerData;
 
 
     public String getBusinessId() {
@@ -63,19 +67,19 @@ public class BusinessDomain {
         this.businessAbout = businessAbout;
     }
 
-    public String getImageUrl() {
+    public byte[] getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public void setImageUrl(byte[] imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    public User getSellerData() {
+    public UserDomain getSellerData() {
         return sellerData;
     }
 
-    public void setSellerData(User sellerData) {
+    public void setSellerData(UserDomain sellerData) {
         this.sellerData = sellerData;
     }
 }

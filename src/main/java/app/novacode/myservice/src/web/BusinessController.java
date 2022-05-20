@@ -5,9 +5,14 @@ package app.novacode.myservice.src.web;
 import app.novacode.myservice.src.domain.entity.BusinessDomain;
 import app.novacode.myservice.src.domain.service.BusinessService;
 import app.novacode.myservice.src.domain.service.UserService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +23,6 @@ public class BusinessController {
     @Autowired
     BusinessService businessService;
 
-
-    @Autowired
-    UserService userService;
 
 
     @GetMapping("/{id}")
@@ -61,6 +63,25 @@ public class BusinessController {
 
 
         return businessService.saveBusiness(businessDomain);
+    }
+
+
+
+    @PostMapping("/uploadFile")
+    public String saveImage(@RequestParam("file")MultipartFile multipartFile, ModelMap modelMap) throws IOException {
+
+        //donde guardarás tu archivo, asegurate de que tengas permisos de escritura
+        String pathFinal = "/Volumes/DataNova/Privado/uploaded_files_spring";
+        //validación básica
+        if(!multipartFile.isEmpty()){
+            //creo un nuevo archivo
+            File file = new File(pathFinal);
+            FileUtils.touch(file);
+            //transfiero el archivo multipart al disco.
+            multipartFile.transferTo(file);
+        }
+        return "fileUploadView";
+
     }
 
 
