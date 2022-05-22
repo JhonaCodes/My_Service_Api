@@ -16,7 +16,7 @@ public class BusinessDomain {
     private String businessAbout;
     private byte[] imageUrl;
 
-    private UserDomain sellerData;
+    private User sellerData;
 
 
     public String getBusinessId() {
@@ -75,11 +75,11 @@ public class BusinessDomain {
         this.imageUrl = imageUrl;
     }
 
-    public UserDomain getSellerData() {
+    public User getSellerData() {
         return sellerData;
     }
 
-    public void setSellerData(UserDomain sellerData) {
+    public void setSellerData(User sellerData) {
         this.sellerData = sellerData;
     }
 }

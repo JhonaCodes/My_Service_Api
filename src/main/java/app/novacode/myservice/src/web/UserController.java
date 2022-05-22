@@ -56,7 +56,6 @@ public class UserController {
     @PostMapping("/body")
     public UserDomain saveUser(@RequestBody UserDomain userDomain){
 
-
         return userService.saveUser(userDomain);
         //@ModelAttribute
     }

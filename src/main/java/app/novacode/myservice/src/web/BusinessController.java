@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,18 +49,26 @@ public class BusinessController {
 
     @GetMapping("/seller/{sellerId}")
     Optional<BusinessDomain> getBusinessBySellerId(@PathVariable("sellerId") String sellerId){
+
         return businessService.findByUserId(sellerId);
     }
 
 
     @PostMapping
-    public BusinessDomain saveBusiness(@ModelAttribute BusinessDomain businessDomain){
+    public BusinessDomain saveBusiness(@RequestBody BusinessDomain businessDomain){
+
+
+
+
 
         int codeUser = Integer.parseInt(businessDomain.getSellerId());
+
+
 
         if (codeUser < 999999) businessDomain.setBusinessId("BU00" + codeUser);
         if (codeUser > 999999 && codeUser < 9999999) businessDomain.setBusinessId("BU0" + codeUser);
         if (codeUser > 999999 && codeUser < 99999999) businessDomain.setBusinessId("BU" + codeUser);
+
 
 
         return businessService.saveBusiness(businessDomain);

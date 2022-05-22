@@ -12,7 +12,7 @@ public class Service{
     @Column(name = "S_Id")
     private Integer servId;
 
-    @Column(name = "Business_B_Id")
+    @Column(name = "B_Id")
     private String bussId;
 
     @Column(name = "S_Name")
@@ -28,7 +28,7 @@ public class Service{
     private String servContact;
 
     @ManyToOne
-    @JoinColumn(name = "B_Id", updatable = false, insertable = false)
+    @JoinColumn(name = "Business_B_Id", updatable = false, insertable = false)
     private Business businessID;
 
     public Integer getServId() {

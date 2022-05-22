@@ -1,7 +1,9 @@
 package app.novacode.myservice.src.web;
 
 
+import app.novacode.myservice.src.domain.entity.BusinessDomain;
 import app.novacode.myservice.src.domain.entity.ServiceDomain;
+import app.novacode.myservice.src.domain.service.BusinessService;
 import app.novacode.myservice.src.domain.service.ServiceToService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,9 @@ import java.util.Optional;
 @RequestMapping("/service")
 public class ServiceController {
 
+
+    @Autowired
+    BusinessService businessService;
 
     @Autowired
     ServiceToService serviceRepository;
@@ -30,9 +35,23 @@ public class ServiceController {
     }
 
 
+
+    // TODO: Crear servicio consultando id del seller
     @PostMapping
-    public ServiceDomain saveService(@ModelAttribute ServiceDomain serviceDomain){
+    public ServiceDomain saveService(@RequestBody ServiceDomain serviceDomain){
+
+        Optional<BusinessDomain> businessId = businessService.findByUserId( serviceDomain.getIdBusiness() );
+
+        String area = businessId.get().getBusinessArea();
+        String idBusiness = businessId.get().getBusinessId();
+
+        serviceDomain.setIdBusiness(idBusiness);
+        serviceDomain.setSpecializationService(area);
+
+
         return serviceRepository.saveService(serviceDomain);
+
+
     }
 
 

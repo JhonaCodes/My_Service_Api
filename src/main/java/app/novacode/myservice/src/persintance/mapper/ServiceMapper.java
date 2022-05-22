@@ -21,7 +21,7 @@ public interface ServiceMapper {
             @Mapping(source = "seSpecification", target = "specializationService"),
             @Mapping(source = "servPrice", target = "priceService"),
             @Mapping(source = "servContact", target = "contactService"),
-            @Mapping(source = "businessID", target = "businessData")
+           @Mapping(source = "businessID", target = "businessData")
     })
 
     ServiceDomain toServiceDomain(Service service);

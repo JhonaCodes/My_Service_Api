@@ -19,6 +19,7 @@ public class RateController {
 
     @GetMapping("/total_rate/{businessIdT}")
     public Optional<Double> totalRates(@PathVariable("businessIdT") String buseinessId){
+
         return rateService.getTotalQualifier(buseinessId);
     }
 
