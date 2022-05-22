@@ -28,7 +28,7 @@ public class Service{
     private String servContact;
 
     @ManyToOne
-    @JoinColumn(name = "Business_B_Id", updatable = false, insertable = false)
+    @JoinColumn(name = "B_Id", updatable = false, insertable = false)
     private Business businessID;
 
     public Integer getServId() {
