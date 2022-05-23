@@ -55,6 +55,12 @@ public class BusinessRepository implements BusinessDomainRepository {
     }
 
     @Override
+    public List<BusinessDomain> getAll() {
+        List<Business> businessList = (List<Business>) businessCrud.findAll();
+        return businessMapper.toBusinessDomainList(businessList);
+    }
+
+    @Override
     public BusinessDomain saveBussiness(BusinessDomain business) {
         Business business1 = businessMapper.toBusiness(business);
         return businessMapper.toBusinessDomain(businessCrud.save(business1));

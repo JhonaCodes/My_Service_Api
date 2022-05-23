@@ -29,7 +29,7 @@ public class Business {
     private String buAbout;
 
     @Column(name ="B_Image_Url")
-    private byte[] buImageUrl;
+    private String buImageUrl;
 
 
     @OneToOne
@@ -94,11 +94,11 @@ public class Business {
         this.buAbout = buAbout;
     }
 
-    public byte[] getBuImageUrl() {
+    public String getBuImageUrl() {
         return buImageUrl;
     }
 
-    public void setBuImageUrl(byte[] buImageUrl) {
+    public void setBuImageUrl(String buImageUrl) {
         this.buImageUrl = buImageUrl;
     }
 }

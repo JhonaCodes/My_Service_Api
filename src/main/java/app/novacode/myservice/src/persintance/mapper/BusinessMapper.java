@@ -22,7 +22,8 @@ public interface BusinessMapper {
             @Mapping(source = "buAbout", target = "businessAbout"),
             @Mapping(source = "buImageUrl", target = "imageUrl"),
             @Mapping(source = "userId", target = "sellerId"),
-            @Mapping(source = "dataUser", target = "sellerData")
+            @Mapping(source = "dataUser", target = "sellerData"),
+            @Mapping(target = "imageByte", ignore = true)
     })
 
     BusinessDomain toBusinessDomain(Business business);

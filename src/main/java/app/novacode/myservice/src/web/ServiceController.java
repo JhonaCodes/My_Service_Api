@@ -42,11 +42,9 @@ public class ServiceController {
 
         Optional<BusinessDomain> businessId = businessService.findByUserId( serviceDomain.getIdBusiness() );
 
-        String area = businessId.get().getBusinessArea();
         String idBusiness = businessId.get().getBusinessId();
 
         serviceDomain.setIdBusiness(idBusiness);
-        serviceDomain.setSpecializationService(area);
 
 
         return serviceRepository.saveService(serviceDomain);

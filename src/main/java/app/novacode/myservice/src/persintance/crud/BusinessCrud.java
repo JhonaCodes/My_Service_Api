@@ -12,6 +12,7 @@ public interface BusinessCrud extends CrudRepository<Business, String> {
     Optional<List<Business>> findByBuArea(String buArea);
     Optional<Business> findByUserId(String userId);
 
+
     @Query(value = "SELECT * FROM Business WHERE B_Name LIKE %?% ", nativeQuery = true)
     Optional<List<Business>> getByNameContains(String buName);
 

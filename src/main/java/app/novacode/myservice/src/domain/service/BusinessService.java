@@ -17,6 +17,10 @@ public class BusinessService {
     BusinessDomainRepository businessDomainRepository;
 
 
+    public List<BusinessDomain> getAll(){
+        return businessDomainRepository.getAll();
+    }
+
     public Optional<BusinessDomain> findByBusinessId(String businessID){
         return businessDomainRepository.findByIdBusiness(businessID);
     }

@@ -4,7 +4,6 @@ package app.novacode.myservice.src.web;
 
 import app.novacode.myservice.src.domain.entity.BusinessDomain;
 import app.novacode.myservice.src.domain.service.BusinessService;
-import app.novacode.myservice.src.domain.service.UserService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
@@ -12,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,24 +26,25 @@ public class BusinessController {
     BusinessService businessService;
 
 
+    @GetMapping("/all")
+   public List<BusinessDomain> getAll(){
+        return businessService.getAll();
+    }
 
     @GetMapping("/{id}")
-    Optional<BusinessDomain> getBusinessById(@PathVariable("id") String idBusiness){
+   public Optional<BusinessDomain> getBusinessById(@PathVariable("id") String idBusiness){
         return businessService.findByBusinessId(idBusiness);
     }
 
 
-
-
-
     @GetMapping("/area/{a}")
-    Optional<List<BusinessDomain>> getBusinessByArea(@PathVariable("a")String businessArea){
+   public Optional<List<BusinessDomain>> getBusinessByArea(@PathVariable("a")String businessArea){
         return businessService.findByBusinessArea(businessArea);
     }
 
 
     @GetMapping("/name/{bName}")
-    Optional<List<BusinessDomain>> getBusinessByName(@PathVariable("bName")String bName){
+   public Optional<List<BusinessDomain>> getBusinessByName(@PathVariable("bName")String bName){
         return businessService.findByName(bName);
     }
 
@@ -56,10 +58,9 @@ public class BusinessController {
 
     @PostMapping
     public BusinessDomain saveBusiness(@RequestBody BusinessDomain businessDomain){
-
-
-
-
+        Path currentRelativePath = Paths.get("");
+        String s = currentRelativePath.toAbsolutePath().toString();
+        System.out.println("Current absolute path is: " + s);
 
         int codeUser = Integer.parseInt(businessDomain.getSellerId());
 
@@ -68,6 +69,30 @@ public class BusinessController {
         if (codeUser < 999999) businessDomain.setBusinessId("BU00" + codeUser);
         if (codeUser > 999999 && codeUser < 9999999) businessDomain.setBusinessId("BU0" + codeUser);
         if (codeUser > 999999 && codeUser < 99999999) businessDomain.setBusinessId("BU" + codeUser);
+
+
+        try{
+
+            byte[] bytes = businessDomain.getImageByte();
+
+           // Path path = Paths.get("../var/www/html/" + businessDomain.getBusinessId() + ".png");
+            String imagePath = "images/";
+            FileOutputStream output = new FileOutputStream(imagePath+businessDomain.getBusinessId() + ".png");
+            output.write(bytes);
+
+            businessDomain.setImageUrl("http://172.245.226.231:8080/myservice/api/v1/" + imagePath + businessDomain.getBusinessId() + ".png");
+
+            System.out.println(businessDomain.getImageUrl());
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
+
+
+
+
 
 
 

@@ -14,8 +14,8 @@ public class BusinessDomain {
     private String businessName;
     private String businessWebsite;
     private String businessAbout;
-    private byte[] imageUrl;
-
+    private String imageUrl;
+    private byte[] imageByte;
     private User sellerData;
 
 
@@ -67,11 +67,11 @@ public class BusinessDomain {
         this.businessAbout = businessAbout;
     }
 
-    public byte[] getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(byte[] imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
@@ -81,5 +81,13 @@ public class BusinessDomain {
 
     public void setSellerData(User sellerData) {
         this.sellerData = sellerData;
+    }
+
+    public byte[] getImageByte() {
+        return imageByte;
+    }
+
+    public void setImageByte(byte[] imageByte) {
+        this.imageByte = imageByte;
     }
 }

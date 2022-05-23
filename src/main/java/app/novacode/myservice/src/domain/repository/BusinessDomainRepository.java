@@ -12,6 +12,7 @@ public interface BusinessDomainRepository {
     Optional<BusinessDomain> findByIdUser(String userId);
     Optional<List<BusinessDomain>> findByName(String businessName);
     Optional<BusinessDomain> findByIdBusiness(String businessId);
+    List<BusinessDomain> getAll();
 
     BusinessDomain saveBussiness(BusinessDomain business);
     void deleteBusiness(String businessId);
