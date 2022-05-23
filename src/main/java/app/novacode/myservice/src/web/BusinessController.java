@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -57,7 +58,7 @@ public class BusinessController {
 
 
     @PostMapping
-    public BusinessDomain saveBusiness(@RequestBody BusinessDomain businessDomain){
+    public BusinessDomain saveBusiness(@RequestBody BusinessDomain businessDomain) throws IOException {
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
         System.out.println("Current absolute path is: " + s);
@@ -76,11 +77,11 @@ public class BusinessController {
             byte[] bytes = businessDomain.getImageByte();
 
            // Path path = Paths.get("../var/www/html/" + businessDomain.getBusinessId() + ".png");
-            String imagePath = "images/";
-            FileOutputStream output = new FileOutputStream(imagePath+businessDomain.getBusinessId() + ".png");
+            //String imagePath = s;
+            FileOutputStream output = new FileOutputStream(s + businessDomain.getBusinessId() + ".png");
             output.write(bytes);
 
-            businessDomain.setImageUrl("http://172.245.226.231:8080/myservice/api/v1/" + imagePath + businessDomain.getBusinessId() + ".png");
+            businessDomain.setImageUrl("http://172.245.226.231:8080/myservice/api/v1" + s + businessDomain.getBusinessId() + ".png");
 
             System.out.println(businessDomain.getImageUrl());
 
@@ -88,7 +89,9 @@ public class BusinessController {
         }catch (Exception e){
             e.printStackTrace();
 
+
         }
+
 
 
 
