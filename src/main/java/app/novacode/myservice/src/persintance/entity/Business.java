@@ -31,6 +31,9 @@ public class Business {
     @Column(name ="B_Image_Url")
     private String buImageUrl;
 
+    @Column(name = "B_Rate")
+    private double buRate;
+
 
     @OneToOne
     @JoinColumn(name ="User_U_Id", updatable = false, insertable = false)
@@ -100,5 +103,13 @@ public class Business {
 
     public void setBuImageUrl(String buImageUrl) {
         this.buImageUrl = buImageUrl;
+    }
+
+    public double getBuRate() {
+        return buRate;
+    }
+
+    public void setBuRate(double buRate) {
+        this.buRate = buRate;
     }
 }

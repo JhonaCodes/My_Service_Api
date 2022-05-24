@@ -15,8 +15,10 @@ public class BusinessDomain {
     private String businessWebsite;
     private String businessAbout;
     private String imageUrl;
+    private double rate;
     private byte[] imageByte;
     private User sellerData;
+
 
 
     public String getBusinessId() {
@@ -89,5 +91,13 @@ public class BusinessDomain {
 
     public void setImageByte(byte[] imageByte) {
         this.imageByte = imageByte;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 }

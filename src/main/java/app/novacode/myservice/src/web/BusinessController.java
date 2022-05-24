@@ -29,7 +29,9 @@ public class BusinessController {
 
     @GetMapping("/all")
    public List<BusinessDomain> getAll(){
+
         return businessService.getAll();
+
     }
 
     @GetMapping("/{id}")

@@ -11,7 +11,7 @@ public class Rate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "R_Id")
-    private Float rateId;
+    private Integer rateId;
 
     @Column(name = "Business_B_Id")
     private String rateBusinessId;
@@ -22,12 +22,11 @@ public class Rate {
     @Column(name = "R_Qualifier_Mail")
     private String mailQualifier;
 
-
-    public Float getRateId() {
+    public Integer getRateId() {
         return rateId;
     }
 
-    public void setRateId(Float rateId) {
+    public void setRateId(Integer rateId) {
         this.rateId = rateId;
     }
 
@@ -38,7 +37,6 @@ public class Rate {
     public void setRateBusinessId(String rateBusinessId) {
         this.rateBusinessId = rateBusinessId;
     }
-
 
     public Double getRateBusiness() {
         return rateBusiness;
