@@ -56,57 +56,21 @@ public class UserController {
     @PostMapping("/body")
     public UserDomain saveUser(@RequestBody UserDomain userDomain){
 
-        return userService.saveUser(userDomain);
+
+        if(userService.getUserByEmail(userDomain.getUserMail()).isEmpty()){
+
+            return userService.saveUser(userDomain);
+
+        }else{
+
+            return null;
+        }
+
+
         //@ModelAttribute
     }
 
 
-//    @PostMapping("/seller")
-//    public Map<String, Object> saveSeller(@ModelAttribute Map<String, Object> sellerBusiness){
-//
-//        UserDomain userDomain = new UserDomain();
-//        BusinessDomain businessDomain = new BusinessDomain();
-//        Map<String, Object> response = new HashMap<>();
-//
-//        // Creando datos de Usuario
-//
-//        userDomain.setUserFirstName(sellerBusiness.get("userFirstName").toString());
-//        userDomain.setUserSecondName(sellerBusiness.get("userSecondName").toString());
-//        userDomain.setUserMail(sellerBusiness.get("userMail").toString());
-//        userDomain.setUserRol(sellerBusiness.get("userRol").toString());
-//        userDomain.setUserPhone(sellerBusiness.get("userPhone").toString());
-//        userDomain.setUserCity(sellerBusiness.get("userCity").toString());
-//        userDomain.setUserPassword(sellerBusiness.get("userPassword").toString());
-//
-//        if(saveUser(userDomain).getUserId() != null){
-//
-//            UserDomain newUser = findUserByEmail(userDomain.getUserMail()).get();
-//
-//            businessDomain.setBusinessArea(sellerBusiness.get("businessArea").toString());
-//            businessDomain.setBusinessName(sellerBusiness.get("businessName").toString());
-//            businessDomain.setBusinessWebsite(sellerBusiness.get("businessWebsite").toString());
-//            businessDomain.setBusinessAbout(sellerBusiness.get("businessAbout").toString());
-//            businessDomain.setImageUrl((byte[]) sellerBusiness.get("imageUrl"));
-//            businessDomain.setSellerId( String.valueOf(newUser.getUserId()) );
-//
-//
-//            if( !businessService.saveBusiness(businessDomain).getBusinessId().isEmpty() ){
-//
-//                response.put("response", "Seller: " + userDomain.getUserFirstName() + " Created and Business " + businessDomain.getBusinessName());
-//
-//            }else{
-//                response.put("response", "Problem for create Business");
-//            }
-//
-//
-//        }else{
-//            response.put("response", "Problem for create Account");
-//        }
-//
-//        // Save User Data
-//        return response;
-//
-//    }
 
     @PutMapping
     public Map<String, String> updatePasswordUser(@RequestBody UserDomain userDomain){

@@ -36,7 +36,6 @@ public class ServiceController {
 
 
 
-    // TODO: Crear servicio consultando id del seller
     @PostMapping
     public ServiceDomain saveService(@RequestBody ServiceDomain serviceDomain){
 
@@ -54,14 +53,14 @@ public class ServiceController {
 
 
     @PutMapping
-    public ServiceDomain updateService(@ModelAttribute ServiceDomain serviceDomain){
+    public ServiceDomain updateService(@RequestBody ServiceDomain serviceDomain){
         return serviceRepository.updateService(serviceDomain);
     }
 
 
 
-    @DeleteMapping
-    public boolean deleteSerice(Integer serviceid){
+    @DeleteMapping("{id}")
+    public boolean deleteSerice(@PathVariable("id") Integer serviceid){
 
         return serviceRepository.deleteService(serviceid);
 
